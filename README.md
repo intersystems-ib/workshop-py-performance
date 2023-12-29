@@ -23,6 +23,13 @@ $ docker-compose build
 
 The main purpose of this example is to test the performance of different databases connected by Python libraries to a Jupyter Notebook project.
 
+## **ATTENTION** Docker configuration
+
+There is a known issue related to the permission request from Docker Desktop to access to the folders of the project, this permission has to be granted before to launch **docker-compose up -d**. To allow the file sharing in Docker Desktop you have to open settings option, select **Resources** and **File Sharing**, from that screen you have to include the path to the project, you can see here an example:
+![alt text](/images/fileSharing.png)
+
+If you don't share this folder previously PostgreSQL database won't be initialized and the project will fail.
+
 ## Test Production 
 * Run the containers that we will use in the workshop:
 ```
