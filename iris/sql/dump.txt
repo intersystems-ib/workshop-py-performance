@@ -1,0 +1,12 @@
+USE DATABASE "TEST"
+GO
+CREATE SCHEMA Test
+GO
+CREATE TABLE Test.Patient (
+    Name VARCHAR(225),
+    Lastname VARCHAR(225),
+    Photo VARCHAR(5000),
+    Phone VARCHAR(14),
+    Address VARCHAR(225)    
+)
+GO

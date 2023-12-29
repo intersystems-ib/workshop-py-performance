@@ -1,0 +1,5 @@
+names==0.3.0
+numpy==1.26.2
+postgres==4.0
+mysql-connector
+matplotlib==3.8.2

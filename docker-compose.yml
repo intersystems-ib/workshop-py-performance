@@ -1,0 +1,76 @@
+version: '3.7'
+
+services:
+
+  # iris
+  iris:
+    init: true
+    container_name: iris
+    build:
+      context: .
+      dockerfile: iris/Dockerfile
+    ports:
+      - 52774:52773
+      - 51774:1972
+    volumes:
+    - ./shared:/shared
+    environment:
+    - ISC_DATA_DIRECTORY=/shared/durable
+    command: --check-caps false --ISCAgent false
+    
+  # jupyter notebook
+  jupyter:
+    build:
+      context: .
+      dockerfile: jupyter/Dockerfile
+    container_name: jupyter
+    ports: 
+      - "8888:8888"
+    environment: 
+      - JUPYTER_ENABLE_LAB=yes
+      - JUPYTER_ALLOW_INSECURE_WRITES=true
+    volumes: 
+      - ./jupyter:/home/jovyan
+      - ./data:/app/data
+    command: "start-notebook.sh --NotebookApp.token='' --NotebookApp.password=''" 
+
+# postgres
+  postgres:
+    build:
+      context: postgres
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: testpassword
+    volumes:
+    - ./postgres/sql/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+    ports:
+      - 5432:5432
+  
+  # mysql
+  mysql:
+    build:
+      context: mysql
+    container_name: mysql
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: SYS
+      MYSQL_USER: testuser
+      MYSQL_PASSWORD: testpassword
+      MYSQL_DATABASE: test
+    volumes:
+    - ./mysql/sql/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+    ports:
+      - 3306:3306
+
+# adminer
+  adminer:
+    container_name: adminer
+    image: adminer
+    restart: always
+    depends_on:
+      - postgres
+    ports:
+      - 8081:8080
