@@ -65,6 +65,21 @@ services:
     ports:
       - 3306:3306
 
+  # oracle
+  oracle:
+    build:
+      context: oracle
+    container_name: oracle
+    environment:
+      ORACLE_SID: test
+      ORACLE_PDB: testPDB
+      ORACLE_PWD: testpassword    
+    volumes:
+    - ./oracle/data:/opt/oracle/oradata
+    - ./oracle/sql:/opt/oracle/scripts/startup
+    ports:
+    - 1521:1521
+
 # adminer
   adminer:
     container_name: adminer
