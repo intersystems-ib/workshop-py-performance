@@ -4,4 +4,5 @@
 .local
 .npm
 .cache
-shared
+iris/shared
+oracle/data

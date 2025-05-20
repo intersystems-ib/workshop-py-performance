@@ -2,6 +2,8 @@ CREATE DATABASE IF NOT EXISTS test;
 
 USE test;
 
+DROP TABLE IF EXISTS patient;
+
 CREATE TABLE patient (
     Id int(8) NOT NULL AUTO_INCREMENT,
     Name varchar(225),
